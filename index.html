@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitorat - Générateur de Rapports</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Générateur de Rapports Monitorat</h1>
+            <div class="mode-selector">
+                <button id="mode-bu" class="mode-btn active">Mode BU</button>
+                <button id="mode-b21" class="mode-btn">Mode B2-1</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Formulaire BU -->
+            <form id="form-bu" class="form-container active">
+                <div class="date-section">
+                    <h3>Date, heure, et lieu</h3>
+                    <div class="form-group">
+                        <label for="bu-date">Date :</label>
+                        <input type="date" id="bu-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-heure-debut">Heure début :</label>
+                        <input type="time" id="bu-heure-debut" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-heure-fin">Heure fin :</label>
+                        <input type="time" id="bu-heure-fin" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Lieu :</label>
+                        <span class="lieu-fixe">BU</span>
+                    </div>
+                </div>
+
+                <div class="interventions-section">
+                    <h3>Interventions</h3>
+                    <div class="form-group">
+                        <label for="bu-nb-interventions">Nombre d'interventions :</label>
+                        <input type="number" id="bu-nb-interventions" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-types-interventions">Types d'interventions / problèmes rencontrés :</label>
+                        <textarea id="bu-types-interventions" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-pret-ordinateurs">Prêt d'ordinateurs :</label>
+                        <input type="number" id="bu-pret-ordinateurs" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-retour-ordinateurs">Retour d'ordinateurs :</label>
+                        <textarea id="bu-retour-ordinateurs" rows="2" placeholder="- BUPF 004&#10;- BUPF 005"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-ordinateurs-traites">Ordinateurs traités :</label>
+                        <textarea id="bu-ordinateurs-traites" rows="2" placeholder="- BUPF 025&#10;- BUPF 026"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-materiels-traites">Matériels traités :</label>
+                        <textarea id="bu-materiels-traites" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-aides-impressions">Aides impressions :</label>
+                        <input type="number" id="bu-aides-impressions" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bu-autres-observations">Autres observations :</label>
+                        <textarea id="bu-autres-observations" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <button type="button" onclick="generateBUReport()" class="generate-btn">Générer le Rapport BU</button>
+            </form>
+
+            <!-- Formulaire B2-1 -->
+            <form id="form-b21" class="form-container">
+                <div class="date-section">
+                    <h3>Date, heure, et lieu</h3>
+                    <div class="form-group">
+                        <label for="b21-date">Date :</label>
+                        <input type="date" id="b21-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b21-heure-debut">Heure début :</label>
+                        <input type="time" id="b21-heure-debut" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b21-heure-fin">Heure fin :</label>
+                        <input type="time" id="b21-heure-fin" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Lieu :</label>
+                        <span class="lieu-fixe">B2-1</span>
+                    </div>
+                </div>
+
+                <div class="interventions-section">
+                    <h3>Interventions</h3>
+                    <div class="form-group">
+                        <label for="b21-nb-interventions">Nombre d'interventions :</label>
+                        <input type="number" id="b21-nb-interventions" min="0" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="b21-types-interventions">Types d'interventions / problèmes rencontrés :</label>
+                        <textarea id="b21-types-interventions" rows="3" placeholder="R.A.S"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="b21-aides-impressions">Aides impressions :</label>
+                        <input type="number" id="b21-aides-impressions" min="0" value="0">
+                    </div>
+                    
+                    <div class="salles-section">
+                        <h4>Salles du bâtiment B :</h4>
+                        <div class="salles-grid">
+                            <div class="form-group">
+                                <label for="salle-b21">B2-1 :</label>
+                                <input type="text" id="salle-b21">
+                            </div>
+                            <div class="form-group">
+                                <label for="salle-b22">B2-2 :</label>
+                                <input type="text" id="salle-b22">
+                            </div>
+                            <div class="form-group">
+                                <label for="salle-b23">B2-3 :</label>
+                                <input type="text" id="salle-b23">
+                            </div>
+                            <div class="form-group">
+                                <label for="salle-b24">B2-4 :</label>
+                                <input type="text" id="salle-b24">
+                            </div>
+                            <div class="form-group">
+                                <label for="salle-b12">B1-2 :</label>
+                                <input type="text" id="salle-b12">
+                            </div>
+                            <div class="form-group">
+                                <label for="salle-b13">B1-3 :</label>
+                                <input type="text" id="salle-b13">
+                            </div>
+                            <div class="form-group">
+                                <label for="salle-cosip">COSIP :</label>
+                                <input type="text" id="salle-cosip">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b21-autres-observations">Autres observations :</label>
+                        <textarea id="b21-autres-observations" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <button type="button" onclick="generateB21Report()" class="generate-btn">Générer le Rapport B2-1</button>
+            </form>
+        </main>
+
+        <div id="output" class="output-container">
+            <h3>Rapport généré :</h3>
+            <div id="report-content" class="report-content"></div>
+            <button id="copy-btn" class="copy-btn" onclick="copyReport()" style="display: none;">Copier le rapport</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
