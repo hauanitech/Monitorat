@@ -194,3 +194,141 @@ function copyReport() {
         alert('Erreur lors de la copie : ' + err);
     });
 }
+
+function emailBUReport() {
+    const date = document.getElementById('bu-date').value;
+    const heureDebut = document.getElementById('bu-heure-debut').value;
+    const heureFin = document.getElementById('bu-heure-fin').value;
+    const nbInterventions = document.getElementById('bu-nb-interventions').value;
+    const typesInterventions = document.getElementById('bu-types-interventions').value;
+    const pretOrdinateurs = document.getElementById('bu-pret-ordinateurs').value;
+    const retourOrdinateurs = document.getElementById('bu-retour-ordinateurs').value;
+    const ordinateursTraites = document.getElementById('bu-ordinateurs-traites').value;
+    const materielsTraites = document.getElementById('bu-materiels-traites').value;
+    const aidesImpressions = document.getElementById('bu-aides-impressions').value;
+    const autresObservations = document.getElementById('bu-autres-observations').value;
+
+    if (!date || !heureDebut || !heureFin) {
+        alert('Veuillez remplir tous les champs obligatoires (date et heures)');
+        return;
+    }
+
+    const formattedDate = formatDate(date);
+    const formattedHeureDebut = formatTime(heureDebut);
+    const formattedHeureFin = formatTime(heureFin);
+
+    const report = `-Date, heure, et lieu---------------------------------------------------------------------
+* ${formattedDate}
+* ${formattedHeureDebut} - ${formattedHeureFin}
+* BU
+
+-Interventions-----------------------------------------------------------------------------
+
+Nombre d'interventions: 
+${nbInterventions}
+
+Types d'interventions / problèmes rencontrés : 
+${typesInterventions || ''}
+
+Prêt d'ordinateurs :
+${pretOrdinateurs}
+ 
+Retour d'ordinateurs :
+${retourOrdinateurs}
+
+Ordinateurs traités :
+${ordinateursTraites}
+
+Matériels traités : 
+${materielsTraites || ''}
+
+
+Aides impressions :
+${aidesImpressions}
+
+Autres observations : 
+${autresObservations || ''}`;
+
+    const subject = `Rapport Monitorat BU - ${formattedDate}`;
+    
+    // Copier le rapport dans le presse-papiers
+    navigator.clipboard.writeText(report).then(function() {
+        // Essayer d'ouvrir le client de messagerie avec juste le sujet
+        const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}`;
+        window.open(mailtoLink);
+        
+        // Informer l'utilisateur
+        alert('Le rapport a été copié dans le presse-papiers.\nVeuillez le coller dans le corps de votre email.');
+    }).catch(function(err) {
+        // Si la copie échoue, afficher le rapport pour copie manuelle
+        alert('Veuillez copier manuellement le rapport ci-dessous :\n\n' + report);
+    });
+}
+
+function emailB21Report() {
+    const date = document.getElementById('b21-date').value;
+    const heureDebut = document.getElementById('b21-heure-debut').value;
+    const heureFin = document.getElementById('b21-heure-fin').value;
+    const nbInterventions = document.getElementById('b21-nb-interventions').value;
+    const typesInterventions = document.getElementById('b21-types-interventions').value;
+    const aidesImpressions = document.getElementById('b21-aides-impressions').value;
+    const salleB21 = document.getElementById('salle-b21').value;
+    const salleB22 = document.getElementById('salle-b22').value;
+    const salleB23 = document.getElementById('salle-b23').value;
+    const salleB24 = document.getElementById('salle-b24').value;
+    const salleB12 = document.getElementById('salle-b12').value;
+    const salleB13 = document.getElementById('salle-b13').value;
+    const salleCosip = document.getElementById('salle-cosip').value;
+    const autresObservations = document.getElementById('b21-autres-observations').value;
+
+    if (!date || !heureDebut || !heureFin) {
+        alert('Veuillez remplir tous les champs obligatoires (date et heures)');
+        return;
+    }
+
+    const formattedDate = formatDate(date);
+    const formattedHeureDebut = formatTime(heureDebut);
+    const formattedHeureFin = formatTime(heureFin);
+
+    const report = `-Date, heure, et lieu---------------------------------------------------------------------
+* ${formattedDate}
+* ${formattedHeureDebut} -${formattedHeureFin}
+* B2-1
+-Interventions-----------------------------------------------------------------------------
+
+Nombre d'interventions: 
+${nbInterventions}
+
+Types d'interventions / problèmes rencontrés : 
+${typesInterventions || 'R.A.S'}
+
+Aides impressions : 
+${aidesImpressions}
+
+Salles du bâtiment B :
+- B2-1 : ${salleB21 || ''}
+- B2-2 : ${salleB22 || ''}
+- B2-3 : ${salleB23 || ''}
+- B2-4 : ${salleB24 || ''}
+- B1-2 : ${salleB12 || ''}
+- B1-3 : ${salleB13 || ''}
+- COSIP : ${salleCosip || ''}
+
+Autres observations : 
+${autresObservations || ''}`;
+
+    const subject = `Rapport Monitorat B2-1 - ${formattedDate}`;
+    
+    // Copier le rapport dans le presse-papiers
+    navigator.clipboard.writeText(report).then(function() {
+        // Essayer d'ouvrir le client de messagerie avec juste le sujet
+        const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}`;
+        window.open(mailtoLink);
+        
+        // Informer l'utilisateur
+        alert('Le rapport a été copié dans le presse-papiers.\nVeuillez le coller dans le corps de votre email.');
+    }).catch(function(err) {
+        // Si la copie échoue, afficher le rapport pour copie manuelle
+        alert('Veuillez copier manuellement le rapport ci-dessous :\n\n' + report);
+    });
+}

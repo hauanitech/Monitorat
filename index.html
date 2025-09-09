@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group">
                         <label for="bu-pret-ordinateurs">Prêt d'ordinateurs :</label>
-                        <input type="number" id="bu-pret-ordinateurs" min="0" value="0">
+                        <textarea id="bu-pret-ordinateurs" rows="2" placeholder="- BUPF 015&#10;- BUPF 020"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="bu-retour-ordinateurs">Retour d'ordinateurs :</label>
@@ -76,6 +76,7 @@
                 </div>
 
                 <button type="button" onclick="generateBUReport()" class="generate-btn">Générer le Rapport BU</button>
+                <button type="button" onclick="emailBUReport()" class="email-btn">📧 Envoyer par Email</button>
             </form>
 
             <!-- Formulaire B2-1 -->
@@ -156,6 +157,7 @@
                 </div>
 
                 <button type="button" onclick="generateB21Report()" class="generate-btn">Générer le Rapport B2-1</button>
+                <button type="button" onclick="emailB21Report()" class="email-btn">📧 Envoyer par Email</button>
             </form>
         </main>
 
