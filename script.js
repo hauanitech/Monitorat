@@ -49,23 +49,16 @@ function showApp() {
 
 function login() {
     const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
     const errorDiv = document.getElementById('login-error');
     
-    // Simple authentication (can be enhanced with real backend)
-    if (username === '' || password === '') {
-        showLoginError('Veuillez remplir tous les champs.');
+    // Simple authentication - only username required
+    if (username === '') {
+        showLoginError('Veuillez saisir un nom d\'utilisateur.');
         return;
     }
     
     if (username.length < 3) {
         showLoginError('Le nom d\'utilisateur doit contenir au moins 3 caractères.');
-        return;
-    }
-    
-    // For now, accept any username with password length >= 4
-    if (password.length < 4) {
-        showLoginError('Le mot de passe doit contenir au moins 4 caractères.');
         return;
     }
     
@@ -80,7 +73,6 @@ function login() {
     
     // Clear form and show app
     document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
     errorDiv.style.display = 'none';
     
     showApp();
