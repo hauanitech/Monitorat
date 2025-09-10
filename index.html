@@ -7,16 +7,46 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Login Screen -->
+    <div id="login-container" class="login-container">
+        <div class="login-form">
+            <h2>Connexion Monitorat</h2>
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="button" onclick="login()" class="login-btn">Se connecter</button>
+            <div id="login-error" class="login-error" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app-container" class="container" style="display: none;">
         <header>
-            <h1>Générateur de Rapports Monitorat</h1>
-            <div class="mode-selector">
+            <div class="header-top">
+                <h1>Générateur de Rapports Monitorat</h1>
+                <div class="user-info">
+                    <span id="user-display">Bienvenue, <span id="current-user"></span></span>
+                    <button onclick="logout()" class="logout-btn">Déconnexion</button>
+                </div>
+            </div>
+            <div class="navigation">
+                <button id="nav-create" class="nav-btn active">Créer un rapport</button>
+                <button id="nav-reports" class="nav-btn">Mes rapports</button>
+            </div>
+            <div class="mode-selector" id="mode-selector">
                 <button id="mode-bu" class="mode-btn active">Mode BU</button>
                 <button id="mode-b21" class="mode-btn">Mode B2-1</button>
             </div>
         </header>
 
         <main>
+            <!-- Create Report Section -->
+            <div id="create-section" class="section active">
             <!-- Formulaire BU -->
             <form id="form-bu" class="form-container active">
                 <div class="date-section">
@@ -75,8 +105,19 @@
                     </div>
                 </div>
 
-                <button type="button" onclick="generateBUReport()" class="generate-btn">Générer le Rapport BU</button>
+                <button type="button" onclick="saveReport('BU')" class="generate-btn">Sauvegarder le Rapport BU</button>
             </form>
+            </div>
+
+            <!-- Reports Management Section -->
+            <div id="reports-section" class="section">
+                <div class="reports-container">
+                    <h3>Mes Rapports</h3>
+                    <div id="reports-list" class="reports-list">
+                        <!-- Reports will be loaded here -->
+                    </div>
+                </div>
+            </div>
 
             <!-- Formulaire B2-1 -->
             <form id="form-b21" class="form-container">
@@ -155,10 +196,29 @@
                     </div>
                 </div>
 
-                <button type="button" onclick="generateB21Report()" class="generate-btn">Générer le Rapport B2-1</button>
+                <button type="button" onclick="saveReport('B21')" class="generate-btn">Sauvegarder le Rapport B2-1</button>
             </form>
         </main>
 
+        <!-- Report View Modal -->
+        <div id="report-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Rapport</h3>
+                    <button onclick="closeModal()" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-report-content" class="report-content"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="edit-report-btn" onclick="editReport()" class="edit-btn">Modifier</button>
+                    <button id="copy-modal-btn" onclick="copyModalReport()" class="copy-btn">Copier</button>
+                    <button id="delete-report-btn" onclick="deleteReport()" class="delete-btn">Supprimer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output container for generated reports (kept for compatibility) -->
         <div id="output" class="output-container">
             <h3>Rapport généré :</h3>
             <div id="report-content" class="report-content"></div>
