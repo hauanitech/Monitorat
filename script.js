@@ -48,8 +48,15 @@ function showApp() {
 }
 
 function login() {
-    const username = document.getElementById('username').value.trim();
+    const usernameElement = document.getElementById('username');
     const errorDiv = document.getElementById('login-error');
+    
+    if (!usernameElement) {
+        showLoginError('Erreur: Élément de connexion non trouvé. Veuillez recharger la page.');
+        return;
+    }
+    
+    const username = usernameElement.value.trim();
     
     // Simple authentication - only username required
     if (username === '') {
