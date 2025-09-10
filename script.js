@@ -1,3 +1,67 @@
+// Session backup functionality
+let isLoadingData = false;
+
+function saveFormData() {
+    if (isLoadingData) return; // Prevent saving during data loading
+    
+    const buData = {};
+    const b21Data = {};
+    
+    // Save BU form data
+    const buInputs = document.querySelectorAll('#form-bu input, #form-bu textarea');
+    buInputs.forEach(input => {
+        if (input.id) {
+            buData[input.id] = input.value;
+        }
+    });
+    
+    // Save B2-1 form data
+    const b21Inputs = document.querySelectorAll('#form-b21 input, #form-b21 textarea');
+    b21Inputs.forEach(input => {
+        if (input.id) {
+            b21Data[input.id] = input.value;
+        }
+    });
+    
+    localStorage.setItem('monitorat-bu-data', JSON.stringify(buData));
+    localStorage.setItem('monitorat-b21-data', JSON.stringify(b21Data));
+}
+
+function loadFormData() {
+    isLoadingData = true;
+    try {
+        // Load BU form data
+        const buData = JSON.parse(localStorage.getItem('monitorat-bu-data') || '{}');
+        Object.entries(buData).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element && value !== '' && value !== null && value !== undefined) {
+                element.value = value;
+            }
+        });
+        
+        // Load B2-1 form data
+        const b21Data = JSON.parse(localStorage.getItem('monitorat-b21-data') || '{}');
+        Object.entries(b21Data).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element && value !== '' && value !== null && value !== undefined) {
+                element.value = value;
+            }
+        });
+    } catch (error) {
+        console.log('Error loading saved form data:', error);
+    }
+    isLoadingData = false;
+}
+
+function setupAutoSave() {
+    // Add event listeners to all form inputs for auto-save
+    const allInputs = document.querySelectorAll('#form-bu input, #form-bu textarea, #form-b21 input, #form-b21 textarea');
+    allInputs.forEach(input => {
+        input.addEventListener('input', saveFormData);
+        input.addEventListener('change', saveFormData);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const modeBU = document.getElementById('mode-bu');
     const modeB21 = document.getElementById('mode-b21');
@@ -32,6 +96,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('bu-date').value = today;
     document.getElementById('b21-date').value = today;
+    
+    // Initialize session backup system
+    loadFormData();
+    setupAutoSave();
 });
 
 function formatDate(dateString) {
