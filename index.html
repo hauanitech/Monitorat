@@ -10,9 +10,15 @@
     <div class="container">
         <header>
             <h1>Générateur de Rapports Monitorat</h1>
-            <div class="mode-selector">
-                <button id="mode-bu" class="mode-btn active">Mode BU</button>
-                <button id="mode-b21" class="mode-btn">Mode B2-1</button>
+            <div class="navigation">
+                <div class="nav-section">
+                    <button id="nav-create" class="nav-btn active">✍️ Nouveau Rapport</button>
+                    <button id="nav-saved" class="nav-btn">📚 Rapports Sauvegardés</button>
+                </div>
+                <div id="mode-selector" class="mode-selector">
+                    <button id="mode-bu" class="mode-btn active">Mode BU</button>
+                    <button id="mode-b21" class="mode-btn">Mode B2-1</button>
+                </div>
             </div>
         </header>
 
@@ -159,10 +165,40 @@
             </form>
         </main>
 
+        <!-- Section des rapports sauvegardés -->
+        <section id="saved-reports" class="saved-section" style="display: none;">
+            <div class="saved-header">
+                <h2>📚 Rapports Sauvegardés</h2>
+                <div class="saved-controls">
+                    <input type="text" id="search-reports" placeholder="🔍 Rechercher par date, lieu ou contenu..." class="search-input">
+                    <select id="filter-type" class="filter-select">
+                        <option value="all">Tous les types</option>
+                        <option value="BU">BU uniquement</option>
+                        <option value="B2-1">B2-1 uniquement</option>
+                    </select>
+                    <button id="clear-all" class="clear-btn" onclick="clearAllReports()">🗑️ Tout supprimer</button>
+                </div>
+            </div>
+            <div id="reports-list" class="reports-list">
+                <div class="no-reports">
+                    <p>📝 Aucun rapport sauvegardé pour le moment.</p>
+                    <p>Générez votre premier rapport pour le voir apparaître ici !</p>
+                </div>
+            </div>
+        </section>
+
         <div id="output" class="output-container">
-            <h3>Rapport généré :</h3>
+            <div class="output-header">
+                <h3>Rapport généré :</h3>
+                <div class="output-actions">
+                    <button id="save-report-btn" class="save-btn" onclick="saveCurrentReport()" style="display: none;">💾 Sauvegarder</button>
+                </div>
+            </div>
             <div id="report-content" class="report-content"></div>
-            <button id="copy-btn" class="copy-btn" onclick="copyReport()" style="display: none;">Copier le rapport</button>
+            <div class="output-buttons">
+                <button id="copy-btn" class="copy-btn" onclick="copyReport()" style="display: none;">📋 Copier le rapport</button>
+                <button id="edit-report-btn" class="edit-btn" onclick="editCurrentReport()" style="display: none;">✏️ Modifier</button>
+            </div>
         </div>
     </div>
 

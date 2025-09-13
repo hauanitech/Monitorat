@@ -31,6 +31,42 @@ h1 {
     margin-bottom: 20px;
 }
 
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-section {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 12px 24px;
+    border: 2px solid #9b59b6;
+    background: white;
+    color: #9b59b6;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-btn.active {
+    background: #9b59b6;
+    color: white;
+}
+
+.nav-btn:hover {
+    background: #8e44ad;
+    color: white;
+    border-color: #8e44ad;
+    transform: translateY(-2px);
+}
+
 .mode-selector {
     display: flex;
     justify-content: center;
@@ -170,6 +206,183 @@ textarea:focus {
     display: block;
 }
 
+/* Styles pour la section des rapports sauvegardés */
+.saved-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.saved-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.saved-header h2 {
+    color: #2c3e50;
+    margin: 0;
+}
+
+.saved-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    padding: 8px 15px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    width: 250px;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+}
+
+.clear-btn {
+    padding: 8px 15px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.clear-btn:hover {
+    background: #c0392b;
+}
+
+.reports-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.report-item {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.report-item:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.report-title {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 16px;
+}
+
+.report-meta {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.report-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.action-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.action-btn:hover {
+    opacity: 0.8;
+}
+
+.view-btn {
+    background: #3498db;
+    color: white;
+}
+
+.edit-btn {
+    background: #f39c12;
+    color: white;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.duplicate-btn {
+    background: #27ae60;
+    color: white;
+}
+
+.report-preview {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #495057;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    max-height: 100px;
+    overflow: hidden;
+    position: relative;
+}
+
+.report-preview:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(transparent, white);
+}
+
+.no-reports {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.no-reports p {
+    margin: 10px 0;
+}
+
 .report-content {
     background: #f8f9fa;
     padding: 20px;
@@ -199,14 +412,178 @@ textarea:focus {
     background: #2980b9;
 }
 
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.output-header h3 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.output-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.output-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.save-btn {
+    padding: 10px 20px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.save-btn:hover {
+    background: #229954;
+}
+
+.edit-btn {
+    padding: 10px 20px;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+    background: #e67e22;
+}
+
+/* Animations */
+.report-item {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.output-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Styles d'amélioration */
+.generate-btn, .nav-btn, .mode-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.generate-btn::before, .nav-btn::before, .mode-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+}
+
+.generate-btn:hover::before, .nav-btn:hover::before, .mode-btn:hover::before {
+    left: 100%;
+}
+
+/* Améliorations visuelles */
+.form-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #9b59b6, #3498db);
+    background-size: 200% 100%;
+    animation: gradientMove 3s ease infinite;
+}
+
+@keyframes gradientMove {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 0%; }
+}
+
+/* Badge de notification */
+.nav-btn {
+    position: relative;
+}
+
+.nav-btn.has-reports::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    background: #e74c3c;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 10px;
     }
     
+    .navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-section {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .nav-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
     .mode-selector {
         flex-direction: column;
         align-items: center;
+        width: 100%;
     }
     
     .mode-btn {
@@ -219,5 +596,51 @@ textarea:focus {
     
     .form-container {
         padding: 20px;
+    }
+    
+    .saved-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .saved-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .filter-select, .clear-btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .report-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .report-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .action-btn {
+        flex: 1;
+        min-width: 70px;
+        margin: 2px;
+    }
+    
+    .output-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .output-buttons {
+        justify-content: center;
     }
 }
