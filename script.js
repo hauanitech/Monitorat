@@ -396,6 +396,27 @@ function setupAutoSave() {
         input.addEventListener('input', saveFormData);
         input.addEventListener('change', saveFormData);
     });
+    
+    // Add auto-save on page unload/beforeunload
+    window.addEventListener('beforeunload', function(e) {
+        if (currentUser) {
+            saveFormData();
+        }
+    });
+    
+    // Additional save on visibility change (when switching tabs, etc.)
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden' && currentUser) {
+            saveFormData();
+        }
+    });
+    
+    // Save periodically every 30 seconds
+    setInterval(() => {
+        if (currentUser && !isLoadingData) {
+            saveFormData();
+        }
+    }, 30000);
 }
 
 // Report Management
@@ -611,17 +632,98 @@ function loadReportsList() {
         return;
     }
     
-    reportsList.innerHTML = reports.map(report => `
+    // Separate reports by type
+    const buReports = reports.filter(report => report.type === 'BU');
+    const b21Reports = reports.filter(report => report.type === 'B21');
+    
+    let html = '';
+    
+    // BU Reports Section
+    if (buReports.length > 0) {
+        const buState = localStorage.getItem(`monitorat-section-bu-${currentUser}`) || 'open';
+        const buIcon = buState === 'open' ? '▼' : '▶';
+        const buDisplay = buState === 'open' ? 'block' : 'none';
+        
+        html += `
+            <div class="reports-section">
+                <div class="section-header" onclick="toggleReportsSection('bu')">
+                    <h4 class="section-title">📋 Rapports BU (${buReports.length})</h4>
+                    <button class="toggle-section-btn" id="toggle-bu">
+                        <span class="toggle-icon">${buIcon}</span>
+                    </button>
+                </div>
+                <div class="section-content" id="bu-reports-content" style="display: ${buDisplay}">
+                    ${buReports.map(report => generateReportItemHTML(report)).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // B2-1 Reports Section
+    if (b21Reports.length > 0) {
+        const b21State = localStorage.getItem(`monitorat-section-b21-${currentUser}`) || 'open';
+        const b21Icon = b21State === 'open' ? '▼' : '▶';
+        const b21Display = b21State === 'open' ? 'block' : 'none';
+        
+        html += `
+            <div class="reports-section">
+                <div class="section-header" onclick="toggleReportsSection('b21')">
+                    <h4 class="section-title">🏢 Rapports B2-1 (${b21Reports.length})</h4>
+                    <button class="toggle-section-btn" id="toggle-b21">
+                        <span class="toggle-icon">${b21Icon}</span>
+                    </button>
+                </div>
+                <div class="section-content" id="b21-reports-content" style="display: ${b21Display}">
+                    ${b21Reports.map(report => generateReportItemHTML(report)).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    if (html === '') {
+        reportsList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Aucun rapport trouvé. Créez votre premier rapport !</p>';
+    } else {
+        reportsList.innerHTML = html;
+    }
+}
+
+function generateReportItemHTML(report) {
+    const updateTime = report.updatedAt !== report.createdAt 
+        ? `<span class="report-modified">(modifié)</span>` 
+        : '';
+    
+    return `
         <div class="report-item" onclick="viewReport('${report.id}')">
             <div class="report-item-header">
                 <span class="report-title">${report.title}</span>
-                <span class="report-date">${new Date(report.createdAt).toLocaleDateString('fr-FR')}</span>
+                <div class="report-meta">
+                    <span class="report-date">${new Date(report.createdAt).toLocaleDateString('fr-FR')}</span>
+                    ${updateTime}
+                </div>
             </div>
             <div class="report-preview">
                 ${report.content.substring(0, 100)}...
             </div>
         </div>
-    `).join('');
+    `;
+}
+
+function toggleReportsSection(sectionType) {
+    const contentId = `${sectionType}-reports-content`;
+    const toggleId = `toggle-${sectionType}`;
+    const content = document.getElementById(contentId);
+    const toggleBtn = document.getElementById(toggleId);
+    const icon = toggleBtn.querySelector('.toggle-icon');
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '▼';
+        localStorage.setItem(`monitorat-section-${sectionType}-${currentUser}`, 'open');
+    } else {
+        content.style.display = 'none';
+        icon.textContent = '▶';
+        localStorage.setItem(`monitorat-section-${sectionType}-${currentUser}`, 'closed');
+    }
 }
 
 function viewReport(reportId) {
